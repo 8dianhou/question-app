@@ -1,25 +1,43 @@
-<ion-modal-view>
-  <ion-header-bar>
-    <h1 class="title">Login</h1>
-    <div class="buttons">
-      <button class="button button-clear" ng-click="closeLogin()">Close</button>
-    </div>
-  </ion-header-bar>
-  <ion-content>
-    <form ng-submit="doLogin()">
-      <div class="list">
-        <label class="item item-input">
-          <span class="input-label">Username</span>
-          <input type="text" ng-model="loginData.username">
-        </label>
-        <label class="item item-input">
-          <span class="input-label">Password</span>
-          <input type="password" ng-model="loginData.password">
-        </label>
-        <label class="item">
-          <button class="button button-block button-positive" type="submit">Log in</button>
-        </label>
-      </div>
-    </form>
-  </ion-content>
-</ion-modal-view>
+<ion-view class="login-view">
+    <ion-nav-bar class="bar-clear nav-title-slide-ios7">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-ios-close-empty" ng-click="closeLogin()">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content class="padding">
+        <div class="row form-heading">
+            <div class="col col-center">
+                <h1 class="form-title">欢迎回来</h1>
+            </div>
+        </div>
+        <div class="row form-wrapper">
+            <div class="col">
+                <form name="login_form" class="" novalidate>
+                    <div class="list input-fields">
+                        <label class="item item-input">
+                            <i class="icon ion-ios-person-outline placeholder-icon"></i>
+                            <input type="text" name="user_name" placeholder="用户名/手机号" ng-model="user.userName" required>
+                        </label>
+                        <label class="item item-input" show-hide-container>
+                            <i class="icon ion-ios-locked-outline placeholder-icon"></i>
+                            <input type="password" name="password" ng-model="user.password" placeholder="密码" required show-hide-input>
+                        </label>
+                        <button type="submit" class="login button button-block" ng-click="doLogin()" ng-disabled="login_form.$invalid">
+                            登录
+                        </button>
+                        <p ng-show="error" class="message error">{{error}}</p>
+                    </div>
+                </form>
+                <div class="alternative-actions">
+                    <a class="forgot-password button button-small button-clear" ui-sref="forgot_password">
+            忘记密码?
+          </a>
+                    <a class="sign-up button button-small button-clear" ui-sref="register">
+            注册
+          </a>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

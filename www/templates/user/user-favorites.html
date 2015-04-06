@@ -1,0 +1,22 @@
+<ion-view title="收藏的">
+    <ion-content>
+        <div class="row favorites-container">
+            <div ng-if="favorites.length == 0" class="col col-center">
+                <div class="empty-results">
+                    <i class="icon ion-favorite"></i>
+                    <h3 class="no-favorites">There's nothing here yet. Start exploring!</h3>
+                </div>
+            </div>
+        </div>
+        <ion-list ng-if="favorites.length > 0">
+            <ion-item ng-repeat="favorite in favorites" class="item-remove-animate item-icon-right" type="item-text-wrap" ui-sref="app.question.detail({questionID : favorite.questionId})">
+                <h2 ng-bind-html="favorite.title | rawHtml"></h2>
+                <p>{{favorite.replier.name}} - {{favorite.replier.headline}}</p>
+                <i class="icon ion-chevron-right icon-accessory"></i>
+                <ion-option-button class="button-assertive" ng-click="remove(chat)">
+                    取消收藏
+                </ion-option-button>
+            </ion-item>
+        </ion-list>
+    </ion-content>
+</ion-view>

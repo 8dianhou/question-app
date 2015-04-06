@@ -1,0 +1,58 @@
+<ion-side-menus enable-menu-with-back-views="false">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-positive nav-title-slide-ios7">
+            <ion-nav-back-button class="button-clear"> 返回
+            </ion-nav-back-button>
+            <ion-nav-buttons side="left">
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right">
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+    <ion-side-menu side="left">
+        <ion-content>
+            <ion-list>
+                <ion-item class="item item-avatar item-icon-right" nav-clear menu-close ui-sref="app.settings">
+                    <img ng-src="{{user.avatar}}">
+                    <h2>{{user.fullname}}</h2>
+                    <p>欢迎使用秒答</p>
+                    <i class="icon ion-chevron-right icon-accessory"></i>
+                </ion-item>
+                <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="app.question.home">
+                    <!-- <i class="icon ion-home"></i> -->
+                    <i class="icon ion-ios-home-outline"></i>
+                    <h2 class="menu-text">首页</h2>
+                </ion-item>
+                <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="app.finding">
+                    <!-- <i class="icon ion-home"></i> -->
+                    <i class="icon ion-ios-ionic-outline"></i>
+                    <h2 class="menu-text">发现</h2>
+                </ion-item>
+                <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="app.topic">
+                    <!-- <i class="icon ion-home"></i> -->
+                    <i class="icon ion-pound"></i>
+                    <h2 class="menu-text">话题</h2>
+                </ion-item>
+                <ion-item nav-clear class="item-divider">
+                    我的秒答
+                </ion-item>
+                <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="app.user.questions">
+                    <!-- <i class="icon ion-home"></i> -->
+                    <i class="icon ion-ios-help-outline"></i>
+                    <h2 class="menu-text">提出的</h2>
+                </ion-item>
+                <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="app.user.answers">
+                    <!-- <i class="icon ion-home"></i> -->
+                    <i class="icon ion-ios-compose-outline"></i>
+                    <h2 class="menu-text">回答的</h2>
+                </ion-item>
+                <ion-item class="item item-icon-left" nav-clear menu-close ui-sref="app.user.favorites">
+                    <!-- <i class="icon ion-home"></i> -->
+                    <i class="icon ion-ios-star-outline"></i>
+                    <h2 class="menu-text">收藏的</h2>
+                </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

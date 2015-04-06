@@ -1,0 +1,33 @@
+<ion-view class="settings-view" title="设置">
+    <ion-nav-buttons side="left">
+        <button class="button button-icon button-clear ion-navicon" menu-toggle="left">
+        </button>
+    </ion-nav-buttons>
+    <ion-nav-title>
+        <span>设置</span>
+    </ion-nav-title>
+    <ion-content>
+        <ul class="list">
+            <ion-toggle ng-model="notifications" toggle-class="toggle-positive">新消息通知</ion-toggle>
+            <!--
+            <div class="item item-divider">关于秒答</div>
+            <a class="item option" ng-controller="EmailSenderCtrl" ng-click="sendFeedback()">
+                <i class="icon ion-chatbox dark"></i>
+                <span class="title">意见反馈</span>
+            </a>
+            <a class="item option" ng-controller="RateAppCtrl" ng-click="rateApp()">
+                <i class="icon ion-heart assertive"></i>
+                <span class="title">去评分</span>
+            </a>
+            -->
+            <div class="item item-divider">服务与法律</div>
+            <a class="item" href="" ng-click="showTerms()">服务条款</a>
+            <a class="item" href="" ng-click="showFAQS()">常见问题</a>
+            <div class="item item-divider">账号</div>
+            <a class="item option" ng-click="showLogOutMenu()">
+                <i class="icon ion-power"></i>
+                <span class="title">退出当前登录</span>
+            </a>
+        </ul>
+    </ion-content>
+</ion-view>

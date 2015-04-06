@@ -1,0 +1,31 @@
+<!-- 
+  Create tabs with an icon and label, using the tabs-positive style. 
+  Each tab's child <ion-nav-view> directive will have its own 
+  navigation history that also transitions its views in and out.
+-->
+<ion-view title="我的妙答">
+    <div class="tabs-striped  tabs-background-light tabs-color-positive">
+        <ion-tabs class="tabs-icon-top" animation="slide-left-right-ios7">
+            <!-- Home Tab -->
+            <ion-tab title="提出的" icon="icon ion-ios-help-outline" ui-sref="app.user.questions">
+                <!--
+            <ion-content has-header="true" padding="true">
+                <h2>Tab 1 Content</h2>
+            </ion-content> -->
+                <ion-nav-view name="tab-user-questions"></ion-nav-view>
+            </ion-tab>
+            <!-- Friends Tab -->
+            <ion-tab title="回答的" icon="icon ion-ios-compose-outline" ui-sref="app.user.answers">
+                <!--
+            <ion-content has-header="true" padding="true">
+                <h2>Tab 2 Content</h2>
+            </ion-content> -->
+                <ion-nav-view name="tab-user-answers"></ion-nav-view>
+            </ion-tab>
+            <!-- Account Tab -->
+            <ion-tab title="收藏的" icon="icon ion-ios-star-outline" ui-sref="app.user.favorites">
+                <ion-nav-view name="tab-user-favorites"></ion-nav-view>
+            </ion-tab>
+        </ion-tabs>
+    </div>
+</ion-view>

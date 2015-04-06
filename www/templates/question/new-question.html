@@ -1,0 +1,51 @@
+<!--
+<ion-view title="提问">
+    <ion-nav-back-button>
+        取消
+    </ion-nav-back-button>
+    <ion-nav-buttons side="right">
+        <button class="button button-clear " menu-toggle="right" ng-disabled="new_question_form.$invalid" ng-click="doNewQuestion()">
+        发送
+        </button>
+    </ion-nav-buttons>
+    <form name="new_question_form" novalidate>
+        <ion-content>
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <input type="text" name="title" ng-model="question.title" placeholder="标题（不超过50个字）" required>
+                </label>
+                <label class="item item-input item-floating-label">
+                    <textarea type="text" name="content" ng-model="question.content" rows="7" placeholder="输入你的问题(不超过140个字)" required></textarea>
+                </label>
+                <label class="item item-input  item-floating-label">
+                    <input type="text" name="tags" ng-model="question.tags" placeholder="标签">
+                </label>
+            </div>
+        </ion-content>
+    </form>
+</ion-view>
+-->
+
+<ion-modal-view>
+    <form name="new_question_form" novalidate>
+        <ion-header-bar>
+            <button class="button button-clear button-stable" ng-click="closeNewQuestion()">取消</button>
+            <h1 class="title">发评论</h1>
+            <button class="button button-clear button-positive" ng-click="doNewQuestion()" ng-disabled="new_question_form.$invalid">发送</button>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <input type="text" name="title" ng-model="question.title" placeholder="标题（不超过50个字）" required>
+                </label>
+                <label class="item item-input item-floating-label">
+                    <textarea type="text" name="content" ng-model="question.content" rows="7" placeholder="输入你的问题(不超过140个字)" required></textarea>
+                </label>
+                <label class="item item-input  item-floating-label">
+                    <input type="text" name="tags" ng-model="question.tags" placeholder="标签">
+                </label>
+            </div>
+        </ion-content>
+    </form>
+</ion-modal-view>
+

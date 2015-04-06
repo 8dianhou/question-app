@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var replace = require('replace');
 var gutil = require('gulp-util');
 var bower = require('bower');
 var concat = require('gulp-concat');
@@ -6,6 +7,31 @@ var sass = require('gulp-sass');
 var minifyCss = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sh = require('shelljs');
+
+var replaceFiles = ['./www/js/config.js'];
+
+var ApiProxyEndpoint = 'http://localhost:8100/api/';
+var ApiEndpoint = 'http://192.168.0.105:8080/8dianhou/';
+
+gulp.task('add-proxy', function() {
+  return replace({
+    regex: ApiEndpoint,
+    replacement: ApiProxyEndpoint,
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
+})
+
+gulp.task('remove-proxy', function() {
+  return replace({
+    regex: ApiProxyEndpoint,
+    replacement: ApiEndpoint,
+    paths: replaceFiles,
+    recursive: false,
+    silent: false,
+  });
+})
 
 var paths = {
   sass: ['./scss/**/*.scss']

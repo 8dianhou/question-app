@@ -1,0 +1,52 @@
+<ion-view class="walkthrough-view" cache-view="false">
+    <ion-nav-bar class="bar-clear nav-title-slide-ios7">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-positive ion-ios-close-empty" ui-sref="app.question.home">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content scroll="false">
+        <div class="top-content row">
+            <ion-slide-box delegate-handle="walkthrough-slider" show-pager="true">
+                <ion-slide>
+                    <div class="row slide-content">
+                        <div class="col">
+                            <h3 class="slide-h">8点后 · 秒答</h3>
+                            <!--
+              <img class="slide-image" ng-src="img/ionWP1.png"/>
+              -->
+                            <p class="slide-p">
+                                获得快速、真实、有效的职场问答
+                            </p>
+                        </div>
+                    </div>
+                </ion-slide>
+                <ion-slide>
+                    <div class="row slide-content">
+                        <div class="col">
+                            <h3 class="slide-h">求职、跳槽有疑惑？就在秒答！</h3>
+                            <!--
+              <img class="slide-image" ng-src="img/ionWP2.png"/>
+              -->
+                            <p class="slide-p">
+                                对话近千名资深行业精英，免费、快速、真实！
+                            </p>
+                        </div>
+                    </div>
+                </ion-slide>
+            </ion-slide-box>
+        </div>
+        <div class="bottom-content row">
+            <div class="col col-center">
+                <a class="login button button-block button-light" ui-sref="login">
+          登录
+        </a>
+            </div>
+            <div class="col col-center">
+                <a class="sign-up button button-block button-light" ui-sref="register">
+          注册
+        </a>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

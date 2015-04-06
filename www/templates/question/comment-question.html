@@ -1,0 +1,16 @@
+<ion-modal-view>
+    <form name="comment_form" novalidate>
+        <ion-header-bar>
+            <button class="button button-clear button-stable" ng-click="closeAddComment()">取消</button>
+            <h1 class="title">发评论</h1>
+            <button class="button button-clear button-positive" ng-click="doAddComment()" ng-disabled="comment_form.$invalid">发送</button>
+        </ion-header-bar>
+        <ion-content>
+            <div class="list">
+                <label class="item item-input item-floating-label">
+                    <textarea type="text" name="comment" ng-model="comment" rows="7" placeholder="写评论..." required></textarea>
+                </label>
+            </div>
+        </ion-content>
+    </form>
+</ion-modal-view>

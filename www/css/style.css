@@ -1,1 +1,250 @@
 /* Empty. Add your own CSS if you like */
+
+.register-view,
+.login-view,
+.forgot-password-view {
+    background-color: #387ef5;
+}
+
+.register-view .view-navigation .bar,
+.login-view .view-navigation .bar,
+.forgot-password-view .view-navigation .bar {
+    background: transparent;
+    border: none;
+}
+
+.register-view .view-navigation .back-button *,
+.login-view .view-navigation .back-button *,
+.forgot-password-view .view-navigation .back-button * {
+    color: #FFFFFF;
+}
+
+.register-view ion-content .scroll,
+.login-view ion-content .scroll,
+.forgot-password-view ion-content .scroll {
+    height: 100%;
+}
+
+.register-view .form-heading,
+.login-view .form-heading,
+.forgot-password-view .form-heading {
+    height: 20%;
+}
+
+.register-view .form-wrapper,
+.login-view .form-wrapper,
+.forgot-password-view .form-wrapper {
+    height: 80%;
+    margin: 0px;
+}
+
+.register-view .form-title,
+.login-view .form-title,
+.forgot-password-view .form-title {
+    color: #FFFFFF;
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 500;
+    letter-spacing: 2px;
+}
+
+.register-view .input-fields .item,
+.login-view .input-fields .item,
+.forgot-password-view .input-fields .item {
+    margin: 10px 0px;
+    border-width: 1px;
+    background-color: #2155aa;
+}
+
+.register-view .input-fields .item *,
+.login-view .input-fields .item *,
+.forgot-password-view .input-fields .item * {
+    color: #FFFFFF;
+}
+
+.register-view .input-fields .item .input-label,
+.login-view .input-fields .item .input-label,
+.forgot-password-view .input-fields .item .input-label {
+    font-weight: 500;
+}
+
+.register-view .input-fields .item.item-input input,
+.login-view .input-fields .item.item-input input,
+.forgot-password-view .input-fields .item.item-input input {
+    flex: inherit;
+    padding-right: 0px;
+}
+
+.register-view .message,
+.login-view .message,
+.forgot-password-view .message {
+    text-align: center;
+    color: #FFFFFF;
+}
+
+.register-view .message.error:before,
+.login-view .message.error:before,
+.forgot-password-view .message.error:before {
+    content: '*';
+    color: #EF473A;
+    text-shadow: 1px 1px 0px rgba(180, 25, 14, 0.3);
+    margin-right: 5px;
+    font-size: 20px;
+}
+
+.register-view .alternative-actions,
+.login-view .alternative-actions,
+.forgot-password-view .alternative-actions {
+    margin: 0px;
+}
+
+.register-view .alternative-actions .button,
+.login-view .alternative-actions .button,
+.forgot-password-view .alternative-actions .button {
+    padding: 0px;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.register-view .show-hide-input,
+.login-view .show-hide-input,
+.forgot-password-view .show-hide-input {
+    display: inherit;
+    width: 100%;
+}
+
+.register-view .toggle-view-anchor,
+.login-view .toggle-view-anchor,
+.forgot-password-view .toggle-view-anchor {
+    position: absolute;
+    top: 6px;
+    right: 0px;
+    height: 34px;
+    line-height: 34px;
+    padding-right: 8px;
+}
+
+
+
+.register-view .toggle-view-anchor *,
+.login-view .toggle-view-anchor *,
+.forgot-password-view .toggle-view-anchor * {
+    color: #fff!important;
+    display: block;
+    font-size: 18px;
+    width: 45px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.register-view .append-view-anchor,
+.login-view .append-view-anchor,
+.forgot-password-view .append-view-anchor {
+    position: absolute;
+    top: 6px;
+    right: 0px;
+    height: 34px;
+    line-height: 34px;
+    padding-right: 55px;
+}
+
+.register-view .append-view-anchor *,
+.login-view .append-view-anchor *,
+.forgot-password-view .append-view-anchor * {
+    color: #fff!important;
+    display: block;
+    font-size: 14px;
+    width: 45px;
+    text-align: center;
+    font-weight: 500;
+}
+
+
+
+/*.login-view .button.login {
+    margin-top: 30px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.9);
+    background-color: #2155aa;
+    border-color: rgba(38, 83, 113, 0.9);
+}*/
+
+.login-view .alternative-actions .sign-up {
+    float: right;
+}
+
+.settings-view {
+  background-color: #EAEAEA; }
+  .settings-view .option i {
+    margin-right: 12px;
+    font-size: 18px; }
+  .settings-view .item-divider {
+    padding-top: 22px;
+    padding-bottom: 6px;
+    color: #919191;
+    font-weight: 400; }
+
+.terms-of-service {
+  padding: 20px;
+  text-align: justify; }
+  .terms-of-service .title {
+    margin-top: 30px; }
+
+.credits {
+  padding: 20px;
+  text-align: justify; }
+
+.faqs {
+  padding: 20px;
+  text-align: justify; }
+  .faqs .faq-item {
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #dddddd; }
+
+
+.walkthrough-view {
+  background: none repeat scroll 0% 0% #387ef5;
+  color: #333;}
+  .walkthrough-view .top-content {
+    height: 85%; }
+    .walkthrough-view .top-content .slider {
+      height: 100%; }
+      .walkthrough-view .top-content .slider .slider-slide {
+        width: calc(100vw - 10px) !important; }
+    .walkthrough-view .top-content .slide-content {
+      height: 100%;
+      text-align: center;
+      padding-top: 40px; }
+      .walkthrough-view .top-content .slide-content .slide-image {
+        width: 100%;
+        margin: 30px 0px 20px; }
+    .walkthrough-view .top-content .slide-h {
+      color: #ebf3ff;
+      font-weight: 400; }
+    .walkthrough-view .top-content .slide-p {
+      color: #A8C7FF;
+      font-size: 16px; }
+    .walkthrough-view .top-content .slider-pager {
+      bottom: 2px; }
+    .walkthrough-view .top-content .slider-pager .slider-pager-page i {
+      color: #2155aa; }
+    .walkthrough-view .top-content .slider-pager .slider-pager-page.active i {
+      color: #A8C7FF;}
+  .walkthrough-view .bottom-content {
+    height: 15%;
+    margin: 0px; }
+    .walkthrough-view .bottom-content .login, .walkthrough-view .bottom-content .sign-up {
+      border-radius: 6px;
+      font-size: 18px;
+      font-weight: 500; }
+    .walkthrough-view .bottom-content .login {
+    	 border-color: #0c63ee; }
+    .walkthrough-view .bottom-content .sign-up {
+      color: #fff;
+      background: transparent;
+      border-color: #fff; }
+
