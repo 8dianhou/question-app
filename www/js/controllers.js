@@ -30,7 +30,7 @@ angular.module('question-app.controllers', [])
         });
 
         var user = {
-            userName: $scope.user.userName,
+            username: $scope.user.userName,
             password: $scope.user.password
         };
 

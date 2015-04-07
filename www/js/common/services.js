@@ -1,5 +1,113 @@
 angular.module('question-app.services', [])
 
+
+.factory('RestfulService', function($rootScope, $http, $q, utility) {
+
+    var _callHttpAPI = function(req) {
+        var deferred = $q.defer();
+        $http(req).success(function(data) {
+                console.log(data);
+                if (data.status == 'SUCCESS') {
+                    deferred.resolve(data.result);
+                } else {
+                    deferred.reject(utility.formatMessage(data.result.code, data.result.arguments));
+                }
+            })
+            .error(function() {
+                deferred.reject('远程服务故障，请稍后再试！');
+            });
+
+        return deferred.promise;
+    };
+
+
+    function substitute(str, data) {
+        var output = str.replace(/%[^%]+%/g, function(match) {
+            if (match in data) {
+                return (data[match]);
+            } else {
+                return ("");
+            }
+        });
+        return (output);
+    }
+
+    return {
+        get: function(url, params, cached) {
+            var isCached = cached || false;
+
+            var req = {
+                method: 'GET',
+                url: url,
+                cache: isCached
+            }
+
+            return _callHttpAPI(req);
+        },
+
+        post: function(url, data, params, options) {
+            data = data || {};
+            var postOptions = options || {};
+
+            var req = {
+                method: 'POST',
+                url: url,
+                data: data,
+                params: params
+            }
+
+            for (var element in postOptions) {
+                if (postOptions.hasOwnProperty(element)) {
+                    req[element] = postOptions[element];
+                }
+            }
+
+            return _callHttpAPI(req);
+        },
+
+        put: function(url, data) {
+            data = data || {};
+            var req = {
+                method: 'POST',
+                url: url,
+                data: data
+            }
+            return _callHttpAPI(req);
+        },
+
+        delete: function(url) {
+            var req = {
+                method: 'DELETE',
+                url: url
+            }
+
+            return _callHttpAPI(req)
+
+        },
+
+        jsonp: function(url, params) {
+            var reqParams = {
+                'callback': 'JSON_CALLBACK'
+            };
+
+            for (element in params) {
+                if (params.hasOwnProperty(element)) {
+                    reqParams[element] = params[element];
+                }
+            }
+
+            req = {
+                method: 'JSONP',
+                url: url,
+                params: reqParams
+            }
+
+            return _callHttpAPI(req);
+        }
+    };
+})
+
+
 .factory('APIFunctions', ['utility', function(utility) {
 
     var getPropByString = utility.getPropByString;
@@ -103,6 +211,19 @@ angular.module('question-app.services', [])
             }
             return newArr;
         },
+
+        formatMessage: function(code, args) {
+            args = args || [];
+
+            var res = code;
+            for (var i = 0; i < args.length; i++) {
+                res = res.replace('${' + i + '}', args[i]);
+            }
+
+            return res;
+
+        },
+
         getPropByString: function(obj, propString) {
             // function to get a specific part of the return object
 
@@ -166,7 +287,7 @@ angular.module('question-app.services', [])
     };
 }])
 
-.service('AuthService', function($rootScope, $http, $q, $localstorage, SERVER_API_URL) {
+.service('AuthService', function($rootScope, $http, $q, $localstorage, RestfulService, SERVER_API_URL) {
     var USER_KEY = '_user_';
     var ACTIVE_STATE = '_active_state';
 
@@ -184,36 +305,23 @@ angular.module('question-app.services', [])
 
     // validate the user phone
     this.verifyPhone = function(phoneNumber) {
-        var deferred = $q.defer();
-        $http.jsonp(SERVER_API_URL + 'api/user/verify_phone' +
-                '?phone=' + phoneNumber +
-                '&callback=JSON_CALLBACK')
-            .success(function(data) {
-                if (data.status == 'SUCCESS') {
-                    deferred.resolve("");
-                } else {
-                    deferred.reject(data.result.code);
-                }
-            })
-            .error(function(data, status) {
-                
-                    deferred.reject('远程服务故障，请稍后再试！');
-                
-
-            });
-        return deferred.promise;
+        return RestfulService.jsonp(SERVER_API_URL + 'api/user/verify_phone', {
+            phone: phoneNumber
+        });
     };
-
-
 
     this.userIsLoggedIn = function() {
         var deferred = $q.defer();
 
         var user = $localstorage.getObject(USER_KEY);
         if (user.length !== 0) {
-            this.validateAuth(user).then(function(data) {
-                deferred.resolve(data.valid);
-            });
+            RestfulService.jsonp(SERVER_API_URL + 'api/user/validate_auth')
+                .then(function(result) {
+                    deferred.resolve(result);
+                }, function() {
+                    deferred.resolve(false);
+                });
+
         } else {
             deferred.resolve(false);
         }
@@ -222,21 +330,18 @@ angular.module('question-app.services', [])
 
     this.doLogin = function(user) {
         var deferred = $q.defer(),
-            nonce_dfd = $q.defer(),
             authService = this;
 
-        authService.generateAuth(user.userName, user.password)
+        RestfulService.jsonp(SERVER_API_URL + 'api/user/auth/v2', user)
             .then(function(data) {
-                
-                    //recieve and store the user's cookie in the local storage
-                    var user = {
-                        data: data,
-                        user_id: data.accountId
-                    };
+                //recieve and store the user's cookie in the local storage
+                var userInfo = {
+                    data: data,
+                    user_id: data.accountId
+                };
+                authService.saveUser(userInfo);
 
-                    authService.saveUser(user);
-
-                    deferred.resolve(user);
+                deferred.resolve(userInfo);
             }, function(reason) {
                 deferred.reject(reason);
             });
@@ -249,42 +354,29 @@ angular.module('question-app.services', [])
         var deferred = $q.defer(),
             authService = this;
 
-        authService.registerUser(user.phone, user.verifyCode,
-                user.email, user.fullName, user.password)
-            .then(function(data) {
-                deferred.resolve(data);
-            }, function(error) {
-                // return error message
-                deferred.reject(error);
-            });
+        RestfulService.jsonp(SERVER_API_URL + 'api/user/regisiter', {
+            phone: user.phone,
+            verify_code: user.verifyCode,
+            email: user.email,
+            fullname: user.fullName,
+            password: user.password
+        }).then(function(data) {
+            //recieve and store the user's cookie in the local storage
+            var user = {
+                data: data,
+                user_id: data.accountId
+            };
 
+            authService.saveUser(user);
+
+            deferred.resolve(data);
+        }, function(error) {
+            deferred.reject(error);
+        });
 
         return deferred.promise;
     };
 
-    // validate the authorization is valid
-    this.validateAuth = function(user) {
-        var deferred = $q.defer();
-        $http.jsonp(SERVER_API_URL + 'api/user/validate_auth' +
-                '?callback=JSON_CALLBACK')
-            .success(function(data) {
-                if (data.status == 'SUCCESS') {
-                    deferred.resolve({
-                        valid: data.result
-                    });
-                } else {
-                    deferred.resolve({
-                        valid: false
-                    });
-                }
-            })
-            .error(function(data, status) {
-                deferred.resolve({
-                    valid: false
-                });
-            });
-        return deferred.promise;
-    };
 
     this.doForgotPassword = function(username) {
         var deferred = $q.defer();
@@ -300,59 +392,6 @@ angular.module('question-app.services', [])
         return deferred.promise;
     };
 
-    this.generateAuth = function(username, password) {
-        var deferred = $q.defer();
-        $http.jsonp(SERVER_API_URL + 'api/user/auth/v2' +
-                '?username=' + username +
-                '&password=' + password +
-                '&callback=JSON_CALLBACK')
-            .success(function(data) {
-                if (data.status == 'SUCCESS') {
-                    deferred.resolve(data.result);
-                } else {
-                    deferred.reject(data.result.code);
-                }
-            })
-            .error(function(data) {
-                deferred.reject('远程服务故障，请稍后再试！')
-            });
-        return deferred.promise;
-    };
-
-
-
-    this.registerUser = function(phone, verifyCode, email, fullname, password) {
-        var deferred = $q.defer();
-        $http.jsonp(SERVER_API_URL + 'api/user/regisiter' +
-                '?phone=' + phone +
-                '&verify_code=' + verifyCode +
-                '&email=' + email +
-                '&fullname=' + fullname +
-                '&password=' + password +
-                '&callback=JSON_CALLBACK')
-            .success(function(data) {
-                if (data.status == 'SUCCESS') {
-                    var user = {
-                        data: data.result,
-                        user_id: data.result.accountId
-                    };
-
-                    authService.saveUser(user);
-
-                    avatar_dfd.resolve(data.result);
-                } else {
-                    deferred.reject(data.result.code);
-                }
-
-            })
-            .error(function(data, status, headers, config) {
-                deferred.reject('远程服务故障，请稍后再试！');
-            });
-        return deferred.promise;
-    };
-
-
-
     this.logOut = function() {
         //empty user data
         $localstorage.destroy(USER_KEY);
@@ -360,33 +399,28 @@ angular.module('question-app.services', [])
 
     //update user avatar from WP
     this.updateUserInfo = function() {
-        var avatar_dfd = $q.defer(),
+        var deferred = $q.defer(),
             authService = this,
-            user = JSON.parse(window.localStorage.ionWordpress_user || null);
+            user = $localstorage.getObject(USER_KEY).data;
 
-        $http.jsonp(SERVER_API_URL + 'api/user/info' +
-                '?accountId=' + user.user_id +
-                '&callback=JSON_CALLBACK')
-            .success(function(data) {
-                if (data.status == 'SUCCESS') {
-                    var user = {
-                        data: data.result,
-                        user_id: data.result.accountId
-                    };
+        RestfulService.jsonp(SERVER_API_URL + 'api/user/info', {
+                accountId: user.user_id
+            }).then(function(result) {
+                var userInfo = {
+                    data: result,
+                    user_id: result.accountId
+                };
 
-                    authService.saveUser(user);
+                authService.saveUser(userInfo);
 
-                    avatar_dfd.resolve(data.result);
-
-                } else {
-                    avatar_dfd.reject(data.result.code);
-                }
+                deferred.resolve(result);
             })
             .error(function(err) {
-                avatar_dfd.reject('远程服务故障，请稍后再试！');
+                console.log('更新用户数据错误' +
+                    err);
             });
 
-        return avatar_dfd.promise;
+        return deferred.promise;
     };
 
     this.saveUser = function(user) {
