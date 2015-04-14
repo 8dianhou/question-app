@@ -2,13 +2,18 @@
     <ion-nav-title>
         <span>秒答正文</span>
     </ion-nav-title>
-    <ion-nav-back-button class="button-clear"> 返回
-    </ion-nav-back-button>
+    <ion-nav-buttons side="left">
+        <button class="button button-clear " ng-click="goBack()"><i class="icon ion-ios-arrow-back">返回</i></button>
+    </ion-nav-buttons>
+    <ion-nav-buttons side="right">
+        <button class="button button-icon button-clear ion-ios-more" ng-click="shareAnywhere()">
+        </button>
+    </ion-nav-buttons>
     <ion-content has-header="true" padding="false">
         <div class="card1" class="padding-vertical">
             <ion-list>
                 <ion-item class="item item-body  item-text-wrap ">
-                    <h2 ng-bind-html="question.title | rawHtml" style="color: #3498db;"></h2>
+                    <h2 ng-bind-html="question.title " style="color: #3498db;"></h2>
                     <p style="color: #929292;">{{question.createdTS | date:'yyyy.MM.dd hh:ss'}}</p>
                     <p ng-bind-html="question.content | rawHtml"></p>
                     <p>
@@ -31,34 +36,32 @@
                 <div class="item item-body item-text-wrap ">
                     <p class="subdued " ng-bind-html="question.answerContent | rawHtml"></p>
                     <p>
-                        <a href="#" class="subdued">1 赞</a>
-                        <a href="#" class="subdued">5 评论</a>
+                        <a href="#" class="subdued">赞 {{question.totalRanks}}</a>
+                        <a href="#" class="subdued">评论 {{question.totalComments}}</a>
                     </p>
                 </div>
-                <ion-item class="item item-avatar item-text-wrap ">
-                    <img src="{{question.replier.avatarUrl + '?size=75,75'}}">
-                    <h2>{{question.replier.name}}</h2>
-                    <p class="light" style="font: 12px/1.3 'Arial','Microsoft YaHei';color: #808080;">10分钟前更新</p>
-                    <p class="light">加入金星是你妈！！</p>
-                </ion-item>
-                <ion-item class="item item-avatar item-text-wrap ">
-                    <img src="{{question.replier.avatarUrl + '?size=75,75'}}">
-                    <h2>{{question.replier.name}}</h2>
-                    <p class="light" style="font: 12px/1.3 'Arial','Microsoft YaHei';color: #808080;">10分钟前更新</p>
-                    <p class="light">加入金星是你妈！！</p>
+                <ion-item id="comments" class="item item-avatar item-text-wrap " ng-repeat="comment in comments">
+                    <img src="{{comment.owner.avatarUrl + '?size=75,75'}}">
+                    <div style="position: relative;">
+                        <h2>{{comment.owner.name}}</h2>
+                        <p class="light" style="font: 12px/1.3 'Arial','Microsoft YaHei';color: #808080;position: absolute;top:0px;right:10px">{{comment.createdTS | date:'yy-MM-dd hh:ss'}}</p>
+                    </div>
+                    <p class="light"> {{comment.content}}</p>
                 </ion-item>
             </ion-list>
         </div>
     </ion-content>
-    <div class="tabs tabs-light tabs-color-positive tabs-icon-left">
-        <div class="tab-item " ng-click="addFavorite()">
-            <i class="icon ion-ios-star-outline"></i> 收藏
+    <ion-footer-bar>
+        <div class="tabs tabs-light tabs-secondary  tabs-color-positive tabs-icon-left">
+            <div class="tab-item " ng-click="addFavorite()">
+                <i class="icon ion-ios-star-outline"></i> 收藏
+            </div>
+            <div class="tab-item " ng-click="addComment(question.answerId)">
+                <i class="icon ion-ios-chatboxes-outline"></i> 评论
+            </div>
+            <div class="tab-item" ng-click="addLike(question.answerId)">
+                <i class="icon " ng-class="isLiked(question.answerId) ? 'ion-ios-heart' : 'ion-ios-heart-outline'"></i> 赞
+            </div>
         </div>
-        <div class="tab-item " ng-click="addComment()">
-            <i class="icon ion-ios-chatboxes-outline"></i> 评论
-        </div>
-        <div class="tab-item" ng-click="addLike()">
-            <i class="icon ion-ios-heart-outline"></i> 赞
-        </div>
-    </div>
+    </ion-footer-bar>
 </ion-view>

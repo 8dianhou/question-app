@@ -160,8 +160,8 @@
     font-weight: 500;
 }
 
-
-
+The source image’s minimum dimensions should be 2208×2208 px, and the artwork
+should be centered within the square
 /*.login-view .button.login {
     margin-top: 30px;
     border-radius: 6px;
@@ -247,4 +247,19 @@
       color: #fff;
       background: transparent;
       border-color: #fff; }
+
+
+
+      .liked-answer {
+      	color : #0c63ee;
+      }
+
+      .grow-icon { 
+      	color : #0c63ee;
+      	transition: all .2s ease-in-out, color ; 
+      }
+
+      .grow-icon:hover {
+      	transform: scale(1.1); 
+      }
 

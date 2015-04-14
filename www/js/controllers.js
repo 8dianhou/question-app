@@ -13,14 +13,14 @@ angular.module('question-app.controllers', [])
 
 
 //LOGIN
-.controller('LoginCtrl', function($scope, $state, $ionicLoading, AuthService) {
+.controller('LoginCtrl', function($scope, $state, $ionicHistory, $ionicLoading, AuthService) {
     $scope.user = {};
     $scope.error = false;
 
-
     $scope.closeLogin = function() {
+
         $scope.user = {}
-        $state.go('walkthrough');
+        $ionicHistory.goBack();
     }
 
     $scope.doLogin = function() {
@@ -56,7 +56,7 @@ angular.module('question-app.controllers', [])
 
 
 // REGISTER
-.controller('RegisterCtrl', function($scope, $state, $ionicLoading, $messageLoading, AuthService) {
+.controller('RegisterCtrl', function($scope, $state, $ionicHistory, $ionicLoading, $messageLoading, AuthService) {
     $scope.user = {};
 
     $scope.doVerifyPhone = function() {
@@ -78,7 +78,7 @@ angular.module('question-app.controllers', [])
 
     $scope.closeRegister = function() {
         $scope.user = {}
-        $state.go('walkthrough');
+        $ionicHistory.goBack();
     }
 
     $scope.doRegister = function() {

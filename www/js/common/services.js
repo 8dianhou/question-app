@@ -5,6 +5,7 @@ angular.module('question-app.services', [])
 
     var _callHttpAPI = function(req) {
         var deferred = $q.defer();
+
         $http(req).success(function(data) {
                 console.log(data);
                 if (data.status == 'SUCCESS') {
@@ -13,8 +14,8 @@ angular.module('question-app.services', [])
                     deferred.reject(utility.formatMessage(data.result.code, data.result.arguments));
                 }
             })
-            .error(function() {
-                deferred.reject('远程服务故障，请稍后再试！');
+            .error(function(e, status) {
+                deferred.reject('远程服务故障，请稍后再试！' + JSON.stringify(status) + JSON.stringify(req));
             });
 
         return deferred.promise;
@@ -39,8 +40,11 @@ angular.module('question-app.services', [])
             var req = {
                 method: 'GET',
                 url: url,
+                params: reqParams,
                 cache: isCached
             }
+
+
 
             return _callHttpAPI(req);
         },
@@ -86,6 +90,8 @@ angular.module('question-app.services', [])
         },
 
         jsonp: function(url, params) {
+            params = params || {};
+
             var reqParams = {
                 'callback': 'JSON_CALLBACK'
             };
@@ -287,6 +293,77 @@ angular.module('question-app.services', [])
     };
 }])
 
+.factory('LoginModal', function($ionicPopup, $state, $messageLoading, AuthService) {
+    return {
+        show: function($scope, title, sck) {
+
+            var loginSuccessed = false;
+
+            AuthService.userIsLoggedIn().then(function(response) {
+                if (response === true) {
+                    sck();
+                } else {
+                    $scope.loginUser = {};
+                    $scope.errorMessage = '';
+
+                    var confirmPopup = $ionicPopup.confirm({
+                        title: title,
+                        subTitle: '请输入用户名和密码',
+                        template: '<div><label class="item item-input"><input type="text" name="user_name" placeholder="用户名/手机号" ng-model="loginUser.userName" autofocus ></label><label class="item item-input"><input type="password" name="password" ng-model="loginUser.password" placeholder="密码" ></label></div> <p ng-show="errorMessage" class="message error">{{errorMessage}}</p><div class="alternative-actions"> <a class="forgot-password button button-small button-clear" ui-sref="forgot_password">忘记密码?</a><a class="sign-up button button-small button-clear" ng-click="gotoRegister()">注册</a></div>',
+                        scope: $scope,
+                        buttons: [{
+                            text: '取消'
+                        }, {
+                            text: '<b>确定</b>',
+                            type: 'button-positive',
+                            onTap: function(e) {
+                                if (!$scope.loginUser.userName || !$scope.loginUser.password) {
+                                    $scope.errorMessage = '用户名和密码不能为空'
+                                        //don't allow the user to close unless he enters wifi password
+                                    e.preventDefault();
+                                } else {
+                                    var user = {
+                                        username: $scope.loginUser.userName,
+                                        password: $scope.loginUser.password
+                                    }
+
+                                    AuthService.doLogin(user)
+                                        .then(function(user) {
+                                            loginSuccessed = true;
+                                            confirmPopup.close();
+                                        }, function(err) {
+                                            //err
+                                            $scope.errorMessage = err;
+                                        });
+
+                                    e.preventDefault();
+                                }
+                            }
+                        }]
+                    });
+
+                    confirmPopup.then(function() {
+                        if (loginSuccessed) {
+                            sck();
+                        }
+                    });
+
+                    $scope.gotoRegister = function() {
+                        confirmPopup.close()
+                        $state.go('register');
+                    }
+
+                }
+
+
+            }, function(error) {
+                $messageLoading.show('远程服务器故障，请稍后再试', 1000);
+            });
+        }
+    };
+})
+
+
 .service('AuthService', function($rootScope, $http, $q, $localstorage, RestfulService, SERVER_API_URL) {
     var USER_KEY = '_user_';
     var ACTIVE_STATE = '_active_state';
@@ -404,21 +481,20 @@ angular.module('question-app.services', [])
             user = $localstorage.getObject(USER_KEY).data;
 
         RestfulService.jsonp(SERVER_API_URL + 'api/user/info', {
-                accountId: user.user_id
-            }).then(function(result) {
-                var userInfo = {
-                    data: result,
-                    user_id: result.accountId
-                };
+            accountId: user.accountId
+        }).then(function(result) {
+            var userInfo = {
+                data: result,
+                user_id: result.accountId
+            };
 
-                authService.saveUser(userInfo);
+            authService.saveUser(userInfo);
 
-                deferred.resolve(result);
-            })
-            .error(function(err) {
-                console.log('更新用户数据错误' +
-                    err);
-            });
+            deferred.resolve(result);
+        }, function(err) {
+            console.log('更新用户数据错误' +
+                err);
+        });
 
         return deferred.promise;
     };

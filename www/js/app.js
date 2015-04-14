@@ -142,14 +142,20 @@ angular.module('question-app', ['ionic', 'question-app.directives', 'question-ap
         }
     })
 
-    .state('app.new-quetion', {
+    .state('new-question', {
         url: "/new-question",
-        views: {
-            'menuContent': {
-                templateUrl: 'templates/question/new-question.html',
-                controller: 'QuestionHomeCtrl'
-            }
-        },
+        templateUrl: 'templates/question/new-question.html',
+        controller: 'NewQuestionCtrl',
+        data: {
+            authenticate: false
+        }
+    })
+
+
+    .state('new-comment', {
+        url: "/new-comment/:answerId",
+        templateUrl: "templates/question/new-comment.html",
+        controller: 'QuestionCommentCtrl',
         data: {
             authenticate: false
         }

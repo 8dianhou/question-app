@@ -15,7 +15,7 @@
         <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()">
         </ion-refresher>
         <div class="questions">
-            <div question-card ng-repeat="question in questions" class="card">
+            <div question-card ng-repeat="(index, question) in questions" class="card">
             </div>
         </div>
         <!-- Infinit scroll -->
@@ -23,10 +23,8 @@
         </ion-infinite-scroll>
     </ion-content>
     <ion-footer-bar class="bar-light">
-      <div class="button-bar">
-        <a class="button button-clear icon ion-ios-plus-empty" ng-click="newQuestion()"></a>
-      </div>
+        <div class="button-bar">
+            <a class="button button-clear icon ion-ios-plus-empty" ng-click="newQuestion()"></a>
+        </div>
     </ion-footer-bar>
-
-   
 </ion-view>
