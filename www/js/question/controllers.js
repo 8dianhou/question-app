@@ -68,12 +68,19 @@ angular.module('question-app.question.controllers', ['question-app.services', 'q
         return QuestionService.isLikedAnswer(answerId);
     }
 
-    $scope.viewComments = function(answerId) {
-        LoginModal.show($scope, '注册登录后可评论秒答', function() {
-            $state.go('new-comment', {
-                answerId: answerId
+    $scope.viewComments = function(questionId, answerId, totalComments) {
+
+        if (totalComments > 0) {
+            $state.go('app.question.detail', {
+                questionID: questionId
             });
-        })
+        } else {
+            LoginModal.show($scope, '注册登录后可评论秒答', function() {
+                $state.go('new-comment', {
+                    answerId: answerId
+                });
+            })
+        }
     }
 
     // Open the new question modal
@@ -122,13 +129,14 @@ angular.module('question-app.question.controllers', ['question-app.services', 'q
         });
 
         var addFavorivateQuestion = function(questionID) {
-            $ionicLoading.show({
-                template: '已收藏'
+            LoginModal.show($scope, '注册登录后才可收藏', function() {
+                $ionicLoading.show({
+                    template: questionID + '已收藏'
+                });
+                $timeout(function() {
+                    $ionicLoading.hide();
+                }, 1000);
             });
-            $timeout(function() {
-                $ionicLoading.hide();
-            }, 1000);
-
         };
 
         var vewAdvisorDetail = function(questionID) {
@@ -200,7 +208,7 @@ angular.module('question-app.question.controllers', ['question-app.services', 'q
     $scope.addComment = function(answerId) {
         LoginModal.show($scope, '注册登录后可评论秒答', function() {
             $state.go('new-comment', {
-                 answerId: answerId
+                answerId: answerId
             });
         })
     }
@@ -212,16 +220,17 @@ angular.module('question-app.question.controllers', ['question-app.services', 'q
 
 
 
-    $scope.addFavorite = function() {
-        $messageLoading.show('已收藏', 2000)
-
+    $scope.addFavorite = function(questionId) {
+        LoginModal.show($scope, '注册登录后才可收藏', function() {
+            $messageLoading.show(questionId + '已收藏', 2000)
+        })
     };
 
 
-     $scope.addLike = function(answerId) {
+    $scope.addLike = function(answerId) {
         LoginModal.show($scope, '注册登录后才可点赞', function() {
             QuestionService.addLike(answerId).then(function(result) {
-                
+
             }, function() {
 
             });

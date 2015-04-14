@@ -147,7 +147,7 @@ angular.module('question-app', ['ionic', 'question-app.directives', 'question-ap
         templateUrl: 'templates/question/new-question.html',
         controller: 'NewQuestionCtrl',
         data: {
-            authenticate: false
+            authenticate: true
         }
     })
 
@@ -157,7 +157,7 @@ angular.module('question-app', ['ionic', 'question-app.directives', 'question-ap
         templateUrl: "templates/question/new-comment.html",
         controller: 'QuestionCommentCtrl',
         data: {
-            authenticate: false
+            authenticate: true
         }
     })
 

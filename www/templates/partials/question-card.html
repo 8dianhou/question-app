@@ -17,7 +17,7 @@
         <a class="tab-item" ng-click="addLike(index, question.answerId)">
             <i class="icon ion-thumbsup" ng-class="isLiked(question.answerId) ? 'liked-answer' : ''"></i> {{question.totalRanks > 0 ? question.totalRanks : '喜欢'}}
         </a>
-        <a class="tab-item" ng-click="viewComments(question.answerId)">
+        <a class="tab-item" ng-click="viewComments(question.questionId, question.answerId, question.totalComments)">
             <i class="icon ion-ios-chatboxes-outline"></i> {{question.totalComments > 0 ? question.totalComments : '评论'}}
         </a>
         <a class="tab-item">
