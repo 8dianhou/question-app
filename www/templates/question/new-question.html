@@ -40,7 +40,7 @@
         </ion-nav-bar>
         <ion-content>
             <label class="item item-input item-floating-label">
-                <input type="text" name="title" ng-model="question.title" placeholder="标题（不超过50个字）" required>
+                <input type="text" name="title" ng-model="question.title" placeholder="标题（不超过50个字）" required autofocus>
             </label>
             <label class="item item-input item-floating-label">
                 <textarea type="text" name="content" ng-model="question.content" rows="7" placeholder="输入你的问题(不超过140个字)" required></textarea>
@@ -48,6 +48,15 @@
             <label class="item item-input  item-floating-label">
                 <input type="text" name="tags" ng-model="question.tags" placeholder="标签">
             </label>
+            <div class="item item-toggle">
+                匿名
+                <label class="toggle toggle-assertive">
+                    <input type="checkbox" name="anonymous" ng-model="question.anonymous">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </div>
         </ion-content>
     </form>
 </ion-view>

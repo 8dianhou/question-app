@@ -296,14 +296,16 @@ angular.module('question-app.question.controllers', ['question-app.services', 'q
     $scope.question = {
         title: '',
         content: '',
-        tags: ''
+        tags: '',
+        anonymous: false
     }
 
     $scope.close = function() {
         $scope.question = {
             title: '',
             content: '',
-            tags: ''
+            tags: '',
+            anonymous: false
         }
         $ionicHistory.goBack();
     };
@@ -319,14 +321,23 @@ angular.module('question-app.question.controllers', ['question-app.services', 'q
             var question = {
                 title: $scope.question.title,
                 content: $scope.question.content,
-                tags: $scope.question.tags
+                tags: $scope.question.tags,
+                anonymous: $scope.question.anonymous
             }
 
             QuestionService.newQuestion(question).then(
                 function() {
-                    $scope.question = {}
+                    $scope.question = {
+                        title: '',
+                        content: '',
+                        tags: '',
+                        anonymous: false
+                    };
                     $ionicHistory.goBack();
                     $messageLoading.show('问题已发送', 1000);
+                },
+                function(msg) {
+                    $messageLoading.show(msg, 1000);
                 });
         }
 

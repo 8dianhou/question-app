@@ -109,7 +109,16 @@ angular.module('question-app.question.services', ['question-app.services'])
         newQuestion: function(question) {
             var deferred = $q.defer();
 
-            deferred.resolve();
+            RestfulService.jsonp(SERVER_API_URL + 'api/question/new.jsonp', {
+                title: question.title,
+                content: question.content,
+                tags: question.tags,
+                anonymous: question.anonymous,
+            }).then(function() {
+                deferred.resolve();
+            }, function(msg) {
+                 deferred.reject(msg);
+            });
 
             return deferred.promise;
         },
