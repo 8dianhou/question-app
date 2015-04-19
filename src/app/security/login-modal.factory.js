@@ -32,7 +32,7 @@
                     var confirmPopup = $ionicPopup.confirm({
                         title: title,
                         subTitle: '请输入用户名和密码',
-                        template: '<div><label class="item item-input"><input type="text" name="user_name" placeholder="用户名/手机号" ng-model="loginUser.userName" autofocus ></label><label class="item item-input"><input type="password" name="password" ng-model="loginUser.password" placeholder="密码" ></label></div> <p ng-show="errorMessage" class="message error">{{errorMessage}}</p><div class="alternative-actions"> <a class="forgot-password button button-small button-clear" ui-sref="forgot_password">忘记密码?</a><a class="sign-up button button-small button-clear" ng-click="gotoRegister()">注册</a></div>',
+                        template: '<div><label class="item item-input"><input type="text" name="user_name" placeholder="用户名/手机号" ng-model="loginUser.userName" autofocus></label><label class="item item-input"><input type="password" name="password" ng-model="loginUser.password" placeholder="密码" ></label></div> <p ng-show="errorMessage" class="message error">{{errorMessage}}</p><div class="alternative-actions"> <a class="forgot-password button button-small button-clear" ui-sref="forgot_password">忘记密码?</a><a class="sign-up button button-small button-clear" ng-click="gotoRegister()">注册</a></div>',
                         scope: vm,
                         buttons: [{
                             text: '取消'

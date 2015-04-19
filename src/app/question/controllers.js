@@ -179,7 +179,7 @@
 
 
     // Controller for Detail Page
-    .controller('QuestionDetailCtrl', function($scope, $ionicHistory, $state, $ionicModal, $ionicLoading, $stateParams, $messageLoading, $cordovaInAppBrowser, loginModal, QuestionService) {
+    .controller('QuestionDetailCtrl', function($scope, $ionicHistory, $state, $ionicModal, $ionicLoading, $stateParams, $messageLoading, $cordovaCamera, loginModal, QuestionService) {
         // $ionicModal.fromTemplateUrl('templates/question/comment-question.html', {
         //     scope: $scope
         // }).then(function(modal) {
@@ -191,21 +191,22 @@
 
         $scope.shareAnywhere = function() {
             var options = {
-                location: 'yes',
-                clearcache: 'yes',
-                toolbar: 'no'
+                quality: 75,
+                destinationType: Camera.DestinationType.DATA_URL,
+                sourceType: Camera.PictureSourceType.CAMERA,
+                allowEdit: true,
+                encodingType: Camera.EncodingType.JPEG,
+                targetWidth: 300,
+                targetHeight: 300,
+                popoverOptions: CameraPopoverOptions,
+                saveToPhotoAlbum: false
             };
 
-            $cordovaInAppBrowser.open('http://ngcordova.com', '_blank', options)
-                .then(function(event) {
-                    // success
-                })
-                .catch(function(event) {
-                    // error
-                });
-
-
-            //$cordovaInAppBrowser.close();
+            $cordovaCamera.getPicture(options).then(function(imageData) {
+                $scope.imgURI = "data:image/jpeg;base64," + imageData;
+            }, function(err) {
+                // An error occured. Show a message to the user
+            });
         }
 
         $scope.addComment = function(answerId) {
