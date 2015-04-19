@@ -1,0 +1,51 @@
+<ion-view class="register-view">
+    <ion-nav-bar class="bar-clear nav-title-slide-ios7">
+        <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-ios-close-empty" ng-click="vm.closeRegister()">
+            </button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content class="padding">
+        <div class="row form-heading">
+            <div class="col col-center">
+                <h1 class="form-title">注册账号</h1>
+            </div>
+        </div>
+        <div class="row form-wrapper">
+            <div class="col">
+                <form name="signup_form" class="" novalidate>
+                    <div class="list input-fields">
+                        <label class="item item-input">
+                            <i class="icon ion-ios-telephone-outline placeholder-icon"></i>
+                            <input type="text" name="user_telephone" placeholder="请输入手机号" ng-model="vm.user.telephone" required>
+                        </label>
+                        <label class="item item-input">
+                            <i class="icon ion-ios-person-outline placeholder-icon"></i>
+                            <input type="text" name="verify_code" placeholder="请输入验证码" ng-model="vm.user.verifyCode" required>
+                            <a class="append-view-anchor" on-touch="vm.doVerifyPhone()" >
+                                <span>获取验证码</span>
+                                <!-- <span>44s后重新发送</span> -->
+                            </a>
+                        </label>
+                        <label class="item item-input">
+                            <i class="icon ion-ios-email-outline placeholder-icon"></i>
+                            <input type="email" name="email" placeholder="请输入邮箱" ng-model="vm.user.email" required>
+                        </label>
+                        <label class="item item-input">
+                            <i class="icon ion-ios-person-outline placeholder-icon"></i>
+                            <input type="text" name="fullname_name" placeholder="请输入姓名" ng-model="vm.user.fullName" required>
+                        </label>
+                        <label class="item item-input" cf-show-hide-container>
+                            <i class="icon ion-ios-locked-outline placeholder-icon"></i>
+                            <input type="password" name="password" placeholder="请输入密码" ng-model="vm.user.password" required cf-show-hide-input>
+                        </label>
+                        <button type="submit" class="register button button-block" ng-click="vm.doRegister()" ng-disabled="signup_form.$invalid">
+                            注册
+                        </button>
+                        <p ng-show="vm.error" class="message error">{{vm.error}}</p>
+                </form>
+                </div>
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

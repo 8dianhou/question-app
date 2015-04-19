@@ -4,3 +4,7 @@ platforms
 .tmp
 .idea
 bower_components
+build
+www/styles/*
+www/js/*
+www/**.html
