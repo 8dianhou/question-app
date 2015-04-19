@@ -3,5 +3,5 @@
 
     angular
         .module('app.core')
-        .constant('SERVER_API_URL', 'http://localhost:8080/8dianhou/');
+        .constant('SERVER_API_URL', 'http://www.8dianhou.com/');
 })();

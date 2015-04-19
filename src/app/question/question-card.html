@@ -7,8 +7,10 @@
         <p class="light">10分钟前更新</p>
     </ion-item>
     <div class="item item-text-wrap ">
-        <h2 style="color: #3498db;" ui-sref="app.question.detail({questionID :question.questionId})">{{question.title}}</h2>
-        <p class="subdued " ng-bind-html="getAnswerContent(question) | rawHtml"></p>
+        <div ui-sref="app.question.detail({questionID :question.questionId})">
+            <h2 style="color: #3498db;">{{question.title}}</h2>
+            <p class="subdued " ng-bind-html="getAnswerContent(question) | rawHtml"></p>
+        </div>
         <p>
             <a ng-if="isShowMore(question)" ng-click="showMore(question)" class="subdued">显示更多</a>
         </p>
@@ -25,4 +27,3 @@
         </a>
     </div>
 </ion-list>
-

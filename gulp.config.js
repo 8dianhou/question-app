@@ -12,7 +12,7 @@ module.exports = function() {
 
     var config = {
 
-        build: './build/',
+        build: './www/',
         source: source,
         css: temp + 'ionic.app.min.css',
 

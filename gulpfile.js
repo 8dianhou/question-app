@@ -88,6 +88,19 @@ gulp.task('build', ['optimize'], function() {
 });
 
 
+gulp.task('dev-build', ['optimize'], function() {
+    log('Building everything');
+
+    var msg = {
+        title: 'gulp dev-build',
+        subtitle: 'Deployed to the www folder',
+        message: 'Running `gulp serve-build`'
+    };
+    del(config.temp);
+    log(msg);
+    notify(msg);
+});
+
 /**
  * Optimize all files, move to a build folder,
  * and inject them into the new index.html
@@ -277,8 +290,9 @@ gulp.task('git-check', function(done) {
 gulp.task('clean-code', function(done) {
     var files = [].concat(
         config.temp + '**/*.js',
-        config.build + 'js/**/*.js',
-        config.build + '**/*.html'
+        config.build + 'js/**/*.js'
+        // ,
+        // config.build + '**/*.html'
     );
     clean(files, done);
 });
