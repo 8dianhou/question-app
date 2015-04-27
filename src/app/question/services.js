@@ -64,7 +64,7 @@
             var deferred = $q.defer();
 
 
-            restfulHelper.jsonp(SERVER_API_URL + 'api/questions.jsonp').then(function(data) {
+            restfulHelper.get(SERVER_API_URL + 'api/questions').then(function(data) {
                 deferred.resolve(data);
             }, function(error) {
                 deferred.reject(error);
@@ -76,7 +76,7 @@
         function loadMoreQuestions(url) {
             var deferred = $q.defer();
 
-            restfulHelper.jsonp(url).then(function(data) {
+            restfulHelper.get(url).then(function(data) {
                 deferred.resolve(data);
             });
 
@@ -162,7 +162,7 @@
         function myQuestions() {
             var deferred = $q.defer();
 
-            restfulHelper.jsonp(SERVER_API_URL + '/api/my-questions.jsonp').then(function(questions) {
+            restfulHelper.get(SERVER_API_URL + 'api/my-questions').then(function(questions) {
                 deferred.resolve(questions);
             }, function(error) {
                 deferred.reject(error);
@@ -174,7 +174,7 @@
         function myAnsweredQuestions() {
             var deferred = $q.defer();
 
-            restfulHelper.jsonp(SERVER_API_URL + '/api/my-answers.jsonp').then(function(questions) {
+            restfulHelper.get(SERVER_API_URL + 'api/my-answers').then(function(questions) {
                 deferred.resolve(questions);
             }, function(error) {
                 deferred.reject(error);

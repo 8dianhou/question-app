@@ -10,9 +10,9 @@
     function AuthServiceProvider() {
         this.$get = AuthService;
 
-        AuthService.$inject = ['$rootScope', '$http', '$q', 'localStorage', 'restfulHelper', 'SERVER_API_URL'];
+        AuthService.$inject = ['$rootScope', '$http', '$q', 'localStorage', 'restfulHelper', 'tokenStorage', 'SERVER_API_URL'];
 
-        function AuthService($rootScope, $http, $q, localStorage, restfulHelper, SERVER_API_URL) {
+        function AuthService($rootScope, $http, $q, localStorage, restfulHelper, tokenStorage, SERVER_API_URL) {
 
             var USER_KEY = '_user_';
             var ACTIVE_STATE = '_active_state';
@@ -57,38 +57,65 @@
             function userIsLoggedIn() {
                 var deferred = $q.defer();
 
-                var user = localStorage.getObject(USER_KEY);
-                if (user.length !== 0) {
-                    restfulHelper.jsonp(SERVER_API_URL + 'api/user/validate_auth')
-                        .then(function(result) {
-                            deferred.resolve(result);
-                        }, function() {
-                            deferred.resolve(false);
-                        });
 
-                } else {
-                    deferred.resolve(false);
-                }
-                return deferred.promise;
+               var authToken = tokenStorage.retrieve();
+               var user = localStorage.getObject(USER_KEY);
+
+               if(authToken && user.length !== 0) {
+                    var now = new Date();
+
+                    if(now.getTime() < user.data.expires) {
+                        deferred.resolve(true);
+                    } 
+               }
+
+               deferred.resolve(false);
+
+               return deferred.promise;
+
+
+
+                // var user = localStorage.getObject(USER_KEY);
+                // if (user.length !== 0) {
+                //     restfulHelper.jsonp(SERVER_API_URL + 'api/user/validate_auth')
+                //         .then(function(result) {
+                //             deferred.resolve(result);
+                //         }, function() {
+                //             deferred.resolve(false);
+                //         });
+
+                // } else {
+                //     deferred.resolve(false);
+                // }
+                // return deferred.promise;
             };
 
             function doLogin(user) {
                 var deferred = $q.defer(),
                     authService = this;
 
-                restfulHelper.jsonp(SERVER_API_URL + 'api/user/auth/v2', user)
-                    .then(function(data) {
-                        //recieve and store the user's cookie in the local storage
-                        var userInfo = {
-                            data: data,
-                            user_id: data.accountId
-                        };
-                        authService.saveUser(userInfo);
 
-                        deferred.resolve(userInfo);
-                    }, function(reason) {
-                        deferred.reject(reason);
-                    });
+                //restfulHelper.jsonp(SERVER_API_URL + 'api/user/auth/v2', user)
+                restfulHelper.post(SERVER_API_URL + 'api/user/authentication/v2', user, {}, {}, true)
+
+                .then(function(result, status, headers) {
+                    //recieve and store the user's cookie in the local storage
+                    var data = result.data;
+                    var userInfo = {
+                        data: data,
+                        user_id: data.accountId
+                    };
+
+                    authService.saveUser(userInfo);
+
+                    var headers = result.headers;
+
+                    tokenStorage.store(headers('X-AUTH-TOKEN'));
+
+                    deferred.resolve(userInfo);
+                }, function(reason) {
+                    deferred.reject(reason);
+                });
 
 
                 return deferred.promise;
@@ -137,6 +164,8 @@
             };
 
             function logOut() {
+
+                tokenStorage.clear();   
                 //empty user data
                 localStorage.destroy(USER_KEY);
             };
@@ -149,13 +178,15 @@
 
                 restfulHelper.jsonp(SERVER_API_URL + 'api/user/info', {
                     accountId: user.accountId
-                }).then(function(result) {
+                }).then(function(result, status, headers) {
                     var userInfo = {
                         data: result,
                         user_id: result.accountId
                     };
 
                     authService.saveUser(userInfo);
+
+
 
                     deferred.resolve(result);
                 }, function(err) {

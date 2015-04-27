@@ -34,8 +34,9 @@
             return _callHttpAPI(req);
         };
 
-        function post(url, data, params, options) {
+        function post(url, data, params, options, returnHeaders) {
             data = data || {};
+            returnHeaders || false;
 
             var req = {
                 method: 'POST',
@@ -46,7 +47,7 @@
 
             req = angular.extend(req, options || {});
 
-            return _callHttpAPI(req);
+            return _callHttpAPI(req, returnHeaders);
         };
 
         function put(url, data) {
@@ -85,16 +86,25 @@
             return _callHttpAPI(req);
         };
 
-        function _callHttpAPI(req) {
+        function _callHttpAPI(req, returnHeaders) {
             var deferred = $q.defer();
+            returnHeaders = returnHeaders || false;
 
             var responseSuccessed = false;
 
-            $http(req).success(function(data) {
+            $http(req).success(function(data, status, headers) {
                     //console.log(data);
                     responseSuccessed = true;
                     if (data.status == 'SUCCESS') {
-                        deferred.resolve(data.result);
+                        if(returnHeaders) {
+                            var result  = [];
+                            result.data = data.result;
+                            result.headers = headers;
+
+                            deferred.resolve(result);
+                        } else {
+                            deferred.resolve(data.result, status, headers());
+                        }
                     } else {
                         deferred.reject(formatMessage(data.result.code, data.result.arguments));
                     }
@@ -104,11 +114,11 @@
                     deferred.reject('远程服务故障，请稍后再试！' + JSON.stringify(status) + JSON.stringify(req));
                 });
 
-            $timeout(function() {
-                if(!responseSuccessed) {
-                    deferred.reject('网络连接超时，请稍候再试！')
-                }
-            }, 5000);
+            // $timeout(function() {
+            //     if(!responseSuccessed) {
+            //         deferred.reject('网络连接超时，请稍候再试！')
+            //     }
+            // }, 5000);
 
             return deferred.promise;
         };

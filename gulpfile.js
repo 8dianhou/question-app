@@ -16,10 +16,10 @@ var sh = require('shelljs');
 var templateCache = require('gulp-angular-templatecache');
 var config = require('./gulp.config')();
 
-var replaceFiles = ['./www/js/config.js'];
+var replaceFiles = ['./src/app/core/constants.js'];
 
-var ApiProxyEndpoint = 'http://localhost:8100/api/';
-var ApiEndpoint = 'http://192.168.0.105:8080/8dianhou/';
+var ApiProxyEndpoint = 'http://localhost:8100/8dianhou/';
+var ApiEndpoint = 'http://localhost:8080/8dianhou/';
 
 
 /**
