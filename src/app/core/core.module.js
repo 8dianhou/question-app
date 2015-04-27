@@ -4,6 +4,6 @@
     angular
         .module('app.core', [
             'blocks.router', 'blocks.restful', 'blocks.utils',
-            'ui.router'
+            'ui.router', 'ngCordova'
         ]);
 })();

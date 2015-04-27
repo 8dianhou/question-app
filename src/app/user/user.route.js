@@ -31,13 +31,12 @@
                 views: {
                     'tab-user-questions': {
                         templateUrl: 'app/user/user-questions.html',
-                        //controller: 'AppCtrl'
+                        controller: 'UserQuestionsController as vm'
                     }
                 },
                 data: {
-                    authenticate: false
+                    authenticate: true
                 }
-
             }
         }, {
             state: 'app.user.answers',
@@ -46,11 +45,11 @@
                 views: {
                     'tab-user-answers': {
                         templateUrl: 'app/user/user-answers.html',
-                       // controller: 'AppCtrl'
+                        controller: 'UserAnswersController as vm'
                     }
                 },
                 data: {
-                    authenticate: false
+                    authenticate: true
                 }
 
             }
@@ -65,10 +64,9 @@
                     }
                 },
                 data: {
-                    authenticate: false
+                    authenticate: true
                 }
             }
         }];
     }
-
 })();

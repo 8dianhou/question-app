@@ -1,0 +1,29 @@
+<ion-view>
+    <ion-nav-bar class="bar-positive nav-title-slide-ios7 search-bar">
+        <ion-nav-title style="width: 100%;width: 100%;display: block;margin-top: -5px;" class="search-input-panel">
+            <form ng-submit="vm.doSearch()">
+                <div class="bar-positive item-input-inset">
+                    <div class="item-input-wrapper">
+                        <i class="icon ion-android-search"></i>
+                        <input type="search" class="search-input"  placeholder="输入你要搜索的内容" min-length="1" ng-model="vm.searchText.value" autofocus style="width: 100%;">
+                        <i ng-if="vm.searchText.value.length > 0" ng-click="vm.clearSearch()" class="icon ion-close"></i>
+                    </div>
+                    <!-- <cf-search-input class="search-wrapper-light" placeholder="Search a user" min-length="1" ng-model="vm.searchText.value"></cf-search-input>
+ -->
+                </div>
+            </form>
+        </ion-nav-title>
+        <ion-nav-buttons side="right">
+            <button class="button button-clear" ng-click="vm.cancleSearch()">取消</button>
+        </ion-nav-buttons>
+    </ion-nav-bar>
+    <ion-content>
+        <div class="questions">
+            <div cf-question-card ng-repeat="(index, question) in vm.questions" question="question" index="index" class="card">
+            </div>
+        </div>
+        <!-- Infinit scroll -->
+        <ion-infinite-scroll ng-if="vm.moreDataCanBeLoaded()" on-infinite="vm.loadMoreData()" distance="1%" icon="ion-loading-c">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

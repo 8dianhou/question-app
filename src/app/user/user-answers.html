@@ -4,6 +4,33 @@
         </button>
     </ion-nav-buttons>
     <ion-content>
-        <h1>我的回答</h1>
+        <!-- Refresh to get the new posts -->
+        <ion-refresher pulling-text="下拉刷新" on-refresh="vm.doRefresh()">
+        </ion-refresher>
+        <div class="row favorites-container">
+            <div ng-if="vm.questions.length == 0" class="col col-center">
+                <div class="empty-results">
+                    <i class="icon ion-favorite"></i>
+                    <h3 class="no-favorites">空空如也，点击这里开始提问吧！</h3>
+                </div>
+            </div>
+        </div>
+        <ion-list ng-if="vm.questions.length > 0">
+            <ion-item ng-repeat="(index, question) in vm.questions" class="item-icon-left item-icon-right item-button-right" type="item-text-wrap" ng-click="vm.viewDetails(index)">
+                <i class="icon" ng-class="question.status == 'FINISHED' ? 'ion-ios-checkmark positive' : 'ion-ios-help assertive'"></i>
+                <h2 ng-bind-html="question.title | rawHtml"></h2>
+                <p ng-class="subdued" style="right:-20px; ">{{vm.formatChinaTime(question.createdTS)}} 提问</p>
+                <p ng-if="question.status == 'FINISHED'">'已回答</p>
+                <p ng-if="question.status !== 'FINISHED'">查看详细</p>
+                <i class="icon ion-chevron-right icon-accessory" ng-if="question.status == 'FINISHED'"></i>
+                 <button class="button button-stable" ng-if="question.status != 'FINISHED'" ng-click="vm.answerQuestion(index)">
+                    回答
+                </button>
+
+            </ion-item>
+        </ion-list>
+        <!-- Infinit scroll -->
+        <ion-infinite-scroll ng-if="vm.moreDataCanBeLoaded()" on-infinite="vm.loadMoreData()" distance="1%" icon="ion-loading-c">
+        </ion-infinite-scroll>
     </ion-content>
 </ion-view>

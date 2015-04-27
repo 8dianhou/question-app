@@ -3,6 +3,6 @@
 
     angular
         .module('app.user', [
-            'app.core'
+            'app.core', 'app.question'
         ]);
 })();

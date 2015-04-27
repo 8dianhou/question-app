@@ -88,7 +88,7 @@ gulp.task('build', ['optimize'], function() {
 });
 
 
-gulp.task('dev-build', ['optimize'], function() {
+gulp.task('dev-build', ['dev-optimize'], function() {
     log('Building everything');
 
     var msg = {
@@ -147,6 +147,16 @@ gulp.task('optimize', ['inject'], function() {
         .pipe($.revReplace())
         .pipe(gulp.dest(config.build));
 });
+
+gulp.task('testBug', [], function() {
+
+    return gulp
+        .src(config.build + 'js/app.js')
+        .pipe($.ngAnnotate({add: true}))
+         .pipe(gulp.dest(config.build));
+
+});
+
 
 gulp.task('dev-optimize', ['inject'], function() {
     log('Optimizing the js, css, and html');
@@ -259,7 +269,8 @@ gulp.task('styles', ['clean-styles'], function() {
 
 
 gulp.task('watch', function() {
-    gulp.watch(paths.sass, ['sass']);
+    //gulp.watch(paths.sass, ['sass']);
+    gulp.watch([config.sass, config.js, config.htmltemplates], ['dev-optimize']);
 });
 
 gulp.task('install', ['git-check'], function() {

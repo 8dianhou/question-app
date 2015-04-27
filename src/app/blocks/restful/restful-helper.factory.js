@@ -6,9 +6,9 @@
         .factory('restfulHelper', restfulHelperFactory);
 
 
-    restfulHelperFactory.$inject = ['$http', '$q'];
+    restfulHelperFactory.$inject = ['$http', '$q', '$timeout'];
 
-    function restfulHelperFactory($http, $q) {
+    function restfulHelperFactory($http, $q, $timeout) {
 
         var service = {
             get: get,
@@ -27,7 +27,7 @@
             var req = {
                 method: 'GET',
                 url: url,
-                params: reqParams,
+                params: params || {},
                 cache: isCached
             };
 
@@ -88,8 +88,11 @@
         function _callHttpAPI(req) {
             var deferred = $q.defer();
 
+            var responseSuccessed = false;
+
             $http(req).success(function(data) {
-                    console.log(data);
+                    //console.log(data);
+                    responseSuccessed = true;
                     if (data.status == 'SUCCESS') {
                         deferred.resolve(data.result);
                     } else {
@@ -97,8 +100,15 @@
                     }
                 })
                 .error(function(e, status) {
+                    responseSuccessed = true;
                     deferred.reject('远程服务故障，请稍后再试！' + JSON.stringify(status) + JSON.stringify(req));
                 });
+
+            $timeout(function() {
+                if(!responseSuccessed) {
+                    deferred.reject('网络连接超时，请稍候再试！')
+                }
+            }, 5000);
 
             return deferred.promise;
         };

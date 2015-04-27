@@ -1,0 +1,14 @@
+<ion-modal-view>
+    <form name="answer_form" novalidate>
+        <ion-header-bar>
+            <button class="button button-icon button-clear ion-ios-close-empty" ng-click="vm.closeAnswerModal()"></button>
+            <h1 class="title">回答</h1>
+            <button class="button button-clear button-positive" ng-click="vm.doAnswer()" ng-disabled="answer_form.$invalid">发送</button>
+        </ion-header-bar>
+        <ion-content>
+            <label class="item item-input item-floating-label">
+                <textarea type="text" name="answer" ng-model="vm.answer.data" rows="8" placeholder="输入你的回答..." required autofocus></textarea>
+            </label>
+        </ion-content>
+    </form>
+</ion-modal-view>

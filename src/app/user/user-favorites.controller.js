@@ -5,6 +5,8 @@
         .module('app.user')
         .controller('UserFavoritesController', UserFavoritesController);
 
+    UserFavoritesController.$inject = [];
+
     function UserFavoritesController() {
         var vm = this;
         vm.favorites = [{

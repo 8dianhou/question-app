@@ -18,7 +18,7 @@
     ])
 
 
-    .run(['$ionicPlatform', 'authService', '$rootScope', '$state', function($ionicPlatform, authService, $rootScope, $state) {
+    .run(['$ionicPlatform', 'authService', '$rootScope', '$state', 'pushNotificationsService', function($ionicPlatform, authService, $rootScope, $state, pushNotificationsService) {
         $ionicPlatform.ready(function() {
             authService.userIsLoggedIn().then(function(response) {
                 //update user info and go on
@@ -46,7 +46,30 @@
                 // org.apache.cordova.statusbar required
                 StatusBar.styleDefault();
             }
+
+            pushNotificationsService.register();
         });
+
+        // $ionicPlatform.on("resume", function() {
+        //     authService.userIsLoggedIn().then(function(response) {
+        //         //update user info and go on
+        //         if (response === true) {
+        //             console.log('user is logged in, update the user info');
+
+        //             authService.updateUserInfo();
+        //         } else {
+        //             console.log('user is logged out, remove the user info');
+
+        //             authService.logOut();
+        //         }
+
+        //         $state.go('app.question.home');
+        //     }, function() {
+        //         alert('error');
+        //     });
+
+        //     pushNotificationsService.register();
+        // });
 
 
         // UI Router Authentication Check

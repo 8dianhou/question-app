@@ -22,4 +22,41 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 @import "www/lib/ionic/scss/ionic";
 
 
+.questions .list {
+	.item-avatar {
+		padding-top: 6px;
+		padding-bottom: 5px;
+
+		img {
+			top: 6px;
+		}
+	}
+
+	.question-content h2{
+		padding-bottom: 5px;
+	}
+
+	.item {
+		border-width: 0px;
+		padding-top: 6px
+	}
+}
+
+.search-bar.bar.bar-header  .title {
+	left: 5px !important; 
+	right: 30px !important;
+
+	.search-input-panel {
+		width: 100%;
+		width: 100%;
+		display: block;
+		margin-top: -5px;
+
+		.search-input {
+			height: 25px;
+		}
+	}
+}
+
+
 

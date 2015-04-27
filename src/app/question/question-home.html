@@ -7,24 +7,24 @@
         </button>
     </ion-nav-buttons>
     <ion-nav-buttons side="right">
-        <button class="button button-icon button-clear ion-ios-search" menu-toggle="right">
+        <button class="button button-icon button-clear ion-ios-search" menu-toggle="right" ui-sref="app.question.search">
         </button>
     </ion-nav-buttons>
     <ion-content>
         <!-- Refresh to get the new posts -->
-        <ion-refresher pulling-text="下拉刷新" on-refresh="doRefresh()">
+        <ion-refresher pulling-text="下拉刷新" on-refresh="vm.doRefresh()">
         </ion-refresher>
         <div class="questions">
-            <div cf-question-card ng-repeat="(index, question) in questions" class="card">
+            <div cf-question-card ng-repeat="(index, question) in vm.questions" class="card" question="question" index="index">
             </div>
         </div>
         <!-- Infinit scroll -->
-        <ion-infinite-scroll ng-if="moreDataCanBeLoaded()" on-infinite="loadMoreData()" distance="1%" icon="ion-loading-c">
+        <ion-infinite-scroll ng-if="vm.moreDataCanBeLoaded()" on-infinite="vm.loadMoreData()" distance="1%" icon="ion-loading-c">
         </ion-infinite-scroll>
     </ion-content>
     <ion-footer-bar class="bar-light">
         <div class="button-bar">
-            <a class="button button-clear icon ion-ios-plus-empty" ng-click="newQuestion()"></a>
+            <a class="button button-clear icon ion-ios-plus-empty" ng-click="vm.newQuestion()"></a>
         </div>
     </ion-footer-bar>
 </ion-view>

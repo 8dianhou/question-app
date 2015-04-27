@@ -14,7 +14,7 @@
             resolveAlways: {}
         };
 
-        $locationProvider.html5Mode(true);
+        $locationProvider.html5Mode(false);
 
         this.configure = function(cfg) {
             angular.extend(config, cfg);
@@ -34,6 +34,7 @@
             var service = {
                 configureStates: configureStates,
                 getState: getState,
+                go: go,
                 stateCounts: stateCounts
             };
 
@@ -52,6 +53,10 @@
                     hasOtherwise = true;
                     $urlRouterProvider.otherwise(otherwisePath);
                 }
+            }
+
+            function go(stateName, options) {
+                $state.go(stateName, options || {});
             }
 
             function getState() {

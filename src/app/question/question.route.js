@@ -33,13 +33,12 @@
                 views: {
                     'question-home': {
                         templateUrl: 'app/question/question-home.html',
-                        controller: 'QuestionHomeCtrl'
+                        controller: 'QuestionHomeController as vm'
                     }
                 },
                 data: {
                     authenticate: false
                 }
-
             }
         }, {
             state: 'app.question.detail',
@@ -48,7 +47,21 @@
                 views: {
                     'question-home': {
                         templateUrl: 'app/question/question-detail.html',
-                        controller: 'QuestionDetailCtrl'
+                        controller: 'QuestionDetailController as vm'
+                    }
+                },
+                data: {
+                    authenticate: false
+                }
+            }
+        }, {
+            state: 'app.question.search',
+            config: {
+                url: "/search",
+                views: {
+                    'question-home': {
+                        templateUrl: 'app/question/search-home.html',
+                        controller: 'QuestionSearchHomeController as vm'
                     }
                 },
                 data: {
@@ -60,7 +73,7 @@
             config: {
                 url: "/new-question",
                 templateUrl: 'app/question/new-question.html',
-                controller: 'NewQuestionCtrl',
+                controller: 'QuestionNewController as vm',
                 data: {
                     authenticate: true
                 }
@@ -71,7 +84,7 @@
             config: {
                 url: "/new-comment/:answerId",
                 templateUrl: "app/question/new-comment.html",
-                controller: 'QuestionCommentCtrl',
+                controller: 'QuestionCommentController as vm',
                 data: {
                     authenticate: true
                 }

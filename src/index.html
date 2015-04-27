@@ -19,9 +19,6 @@
     <!-- endbuild -->
 
     <link href="css/style.css" rel="stylesheet">
-     <base href="/">
-
-   
 </head>
 <!-- <span>
 a
@@ -34,7 +31,7 @@ a
 
 <!-- ionic/angularjs js -->
 <script src="lib/ionic/js/ionic.bundle.js"></script>
-<script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
+<script src="lib/ngCordova/dist/ng-cordova.js"></script>
 <!-- cordova script (this will be a 404 during development) -->
 <script src="cordova.js"></script>
 
@@ -53,18 +50,24 @@ a
 <script src="/src/app/user/user.module.js"></script>
 <script src="/src/app/blocks/restful/restful-helper.factory.js"></script>
 <script src="/src/app/blocks/router/router-helper.provider.js"></script>
+<script src="/src/app/blocks/utils/date-formatter.factory.js"></script>
 <script src="/src/app/blocks/utils/local-storage.factory.js"></script>
 <script src="/src/app/blocks/utils/message-loading.factory.js"></script>
 <script src="/src/app/blocks/utils/raw-html.filter.js"></script>
 <script src="/src/app/core/constants.js"></script>
 <script src="/src/app/core/core.route.js"></script>
+<script src="/src/app/core/push-nofiication-service.factory.js"></script>
 <script src="/src/app/layout/app.controller.js"></script>
 <script src="/src/app/layout/layout.route.js"></script>
 <script src="/src/app/layout/walkthrough.controller.js"></script>
 <script src="/src/app/question/cf-question-card.directive.js"></script>
-<script src="/src/app/question/controllers.js"></script>
+<script src="/src/app/question/cf-search-input.directive.js"></script>
+<script src="/src/app/question/question.comment.controller.js"></script>
+<script src="/src/app/question/question.detail.controller.js"></script>
 <script src="/src/app/question/question.home.contoller.js"></script>
+<script src="/src/app/question/question.new.controller.js"></script>
 <script src="/src/app/question/question.route.js"></script>
+<script src="/src/app/question/question.search-home.controller.js"></script>
 <script src="/src/app/question/services.js"></script>
 <script src="/src/app/security/auth-service.provider.js"></script>
 <script src="/src/app/security/login-modal.factory.js"></script>
@@ -74,7 +77,9 @@ a
 <script src="/src/app/security/sf-show-hide.directive.js"></script>
 <script src="/src/app/settings/settings.controller.js"></script>
 <script src="/src/app/settings/settings.route.js"></script>
+<script src="/src/app/user/user-answers.controller.js"></script>
 <script src="/src/app/user/user-favorites.controller.js"></script>
+<script src="/src/app/user/user-questions.controller.js"></script>
 <script src="/src/app/user/user.route.js"></script>
 <!-- endinject -->
 <!-- inject:templates:js -->

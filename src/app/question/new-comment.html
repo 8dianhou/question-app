@@ -1,18 +1,20 @@
 <ion-view>
-    <ion-nav-bar class="nav-title-slide-ios7">
-        <ion-nav-title>
-            <span>评论</span>
-        </ion-nav-title>
-        <ion-nav-buttons side="left">
-            <button class="button button-clear button-stable" ng-click="closeAddComment()">取消</button>
-        </ion-nav-buttons>
-        <ion-nav-buttons side="right">
-            <button class="button button-clear button-positive" ng-click="doAddComment()" >发送</button>
-        </ion-nav-buttons>
-    </ion-nav-bar>
-    <ion-content>
-        <label class="item item-input item-floating-label">
-            <textarea type="text" name="comment" ng-model="comment.data" rows="8" placeholder="写评论..."></textarea>
-        </label>
-    </ion-content>
+    <form name="comment_form" novalidate>
+        <ion-nav-bar class="nav-title-slide-ios7">
+            <ion-nav-title>
+                <span>评论</span>
+            </ion-nav-title>
+            <ion-nav-buttons side="left">
+                <button class="button button-clear button-stable" ng-click="vm.closeAddComment()">取消</button>
+            </ion-nav-buttons>
+            <ion-nav-buttons side="right">
+                <button class="button button-clear button-positive" ng-click="vm.doAddComment()" ng-disabled="comment_form.$invalid">发送</button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-content>
+            <label class="item item-input item-floating-label">
+                <textarea type="text" name="comment" ng-model="vm.comment.data" rows="8" placeholder="写评论..." required autofocus></textarea>
+            </label>
+        </ion-content>
+    </form>
 </ion-view>

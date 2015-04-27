@@ -5,10 +5,10 @@
         .module('app.settings')
         .controller('SettingsController', SettingsController);
 
-    SettingsController.$inject = ['$scope', '$ionicActionSheet', '$ionicModal', '$state', 'authService'];
+    SettingsController.$inject = ['$scope', '$ionicActionSheet', '$ionicModal', '$state', 'authService', 'pushNotificationsService'];
 
 
-    function SettingsController($scope, $ionicActionSheet, $ionicModal, $state, authService) {
+    function SettingsController($scope, $ionicActionSheet, $ionicModal, $state, authService, pushNotificationsService) {
         var vm = this;
         vm.notifications = true;
         vm.sendLocation = false;
@@ -17,6 +17,15 @@
         vm.showFAQS = showFAQS;
         vm.closeFAQs = closeFAQs;
         vm.showLogOutMenu = showLogOutMenu;
+
+        $scope.$watch('vm.notifications', function(current, original) {
+
+            if(current) {
+                pushNotificationsService.register()
+            } else {
+                pushNotificationsService.unregister();
+            }
+        });
 
 
         var termsModal;
@@ -50,6 +59,8 @@
         function closeFAQs() {
             faqsModal.hide();
         }
+
+
 
         // Triggered on a the logOut button click
         function showLogOutMenu() {

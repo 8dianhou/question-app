@@ -35,5 +35,39 @@
             "type": "registry",
             "id": "org.apache.cordova.inappbrowser"
         }
+    },
+    "org.apache.cordova.statusbar": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.statusbar"
+        }
+    },
+    "com.phonegap.plugins.PushPlugin": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/forcedotcom/PushPlugin",
+            "subdir": ".",
+            "ref": "unstable"
+        }
+    },
+    "de.appplant.cordova.plugin.badge": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/katzer/cordova-plugin-badge.git",
+            "subdir": "."
+        }
+    },
+    "org.apache.cordova.dialogs": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.dialogs"
+        }
+    },
+    "nl.x-services.plugins.toast": {
+        "source": {
+            "type": "git",
+            "url": "https://github.com/EddyVerbruggen/Toast-PhoneGap-Plugin.git",
+            "subdir": "."
+        }
     }
 }

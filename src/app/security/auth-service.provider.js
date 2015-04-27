@@ -5,7 +5,6 @@
         .module('app.security')
         .provider('authService', AuthServiceProvider);
 
-
     AuthServiceProvider.$inject = [];
 
     function AuthServiceProvider() {

@@ -3,7 +3,8 @@
 
     angular
         .module('app.question', [
-        	'app.core', 'app.layout'
+            'app.core', 'app.layout',
+            'ngCordova'
         ]);
 
 })();

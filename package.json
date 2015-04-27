@@ -37,9 +37,13 @@
     "wiredep": "^2.2.2",
     "yargs": "^3.7.2"
   },
-  "cordovaPlugins": [],
+  "cordovaPlugins": [
+    "org.apache.cordova.console",
+    "org.apache.cordova.device",
+    "org.apache.cordova.dialogs"
+  ],
   "cordovaPlatforms": [
-    "ios",
-    "android"
+    "android",
+    "ios"
   ]
 }
